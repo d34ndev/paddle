@@ -8,8 +8,10 @@ module Paddle
       end
 
       def get_request(url, params: {}, headers: {})
+        # Paddle expects arrays as comma-separated lists, e.g. status=active,past_due
+        params = params.transform_values { |value| value.is_a?(Array) ? value.join(",") : value }
+
         # skip_count is sent as a header rather than a query param
-        params = params.dup
         headers = headers.merge("Skip-Count" => "true") if params.delete(:skip_count)
 
         handle_response(connection.get(url, params, headers))

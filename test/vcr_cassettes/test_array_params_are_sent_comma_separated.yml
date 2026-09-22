@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/subscriptions?id=sub_01%2Csub_02&status=active%2Cpast_due
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"sub_01","status":"active"},{"id":"sub_02","status":"past_due"}],"meta":{"request_id":"c1","pagination":{"per_page":50,"next":"https://sandbox-api.paddle.com/subscriptions?after=sub_02&id=sub_01%2Csub_02&status=active%2Cpast_due","has_more":false,"estimated_total":2}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

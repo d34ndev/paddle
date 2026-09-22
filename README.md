@@ -126,6 +126,14 @@ end
 >
 > The Paddle API doesn't take `nil` values for optional parameters. If you want to remove a value, you'll need to pass `"null"` instead.
 
+When filtering a list, you can pass an array or a comma-separated string to filter by more than one value. Arrays are sent as comma-separated lists, as Paddle expects:
+
+```ruby
+Paddle::Subscription.list(status: [ "active", "past_due" ])
+# is the same as
+Paddle::Subscription.list(status: "active,past_due")
+```
+
 ### Error Handling
 
 When API requests fail, the gem provides detailed error information to help you debug issues. Errors are raised as exceptions with comprehensive details including field-level validation errors.
@@ -496,7 +504,7 @@ Paddle::Subscription.activate(id: "sub_abc123")
 # Returns a Paddle::Collection of Paddle::SubscriptionHistory
 # https://developer.paddle.com/api-reference/subscription-history/list-subscription-history
 Paddle::Subscription.history(id: "sub_abc123")
-Paddle::Subscription.history(id: "sub_abc123", action: "subscription_created,subscription_canceled")
+Paddle::Subscription.history(id: "sub_abc123", action: [ "subscription_created", "subscription_canceled" ])
 Paddle::Subscription.history(id: "sub_abc123", source: "customer_portal", actor_type: "customer")
 Paddle::Subscription.history(id: "sub_abc123", "occurred_at[GTE]": "2026-01-01T00:00:00Z")
 

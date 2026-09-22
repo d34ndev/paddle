@@ -27,4 +27,16 @@ class ClientTest < Minitest::Test
     assert_equal "invalid_field", error.paddle_error_code
     assert_equal "The request could not be processed.", error.paddle_error_message
   end
+
+  def test_array_params_are_sent_comma_separated
+    subscriptions = Paddle::Subscription.list(status: [ "active", "past_due" ], id: [ "sub_01", "sub_02" ])
+
+    assert_equal [ "sub_01", "sub_02" ], subscriptions.map(&:id)
+  end
+
+  def test_array_include_on_retrieve_is_sent_comma_separated
+    transaction = Paddle::Transaction.retrieve(id: "txn_01", extra: [ "address", "customer" ])
+
+    assert_equal "txn_01", transaction.id
+  end
 end
