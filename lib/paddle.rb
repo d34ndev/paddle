@@ -14,6 +14,7 @@ module Paddle
   autoload :ErrorFactory, "paddle/error_generator"
 
   autoload :Object, "paddle/object"
+  autoload :Webhook, "paddle/webhook"
 
   class << self
     attr_writer :config

@@ -745,6 +745,50 @@ result.auto_paging_each do |segment|
 end
 ```
 
+### Verifying Webhooks
+
+Paddle signs every webhook it sends with a `Paddle-Signature` header. Verify it before trusting the payload.
+You'll need the endpoint secret key for your notification destination, which is the `endpoint_secret_key` on its
+`Paddle::NotificationSetting`, or in the dashboard under Developer Tools > Notifications.
+
+The payload must be the **raw request body**. If it's parsed or reformatted first, the signature won't match.
+
+```ruby
+# https://developer.paddle.com/webhooks/signature-verification
+class PaddleWebhooksController < ApplicationController
+  skip_forgery_protection
+
+  def create
+    event = Paddle::Webhook.construct_event(
+      payload: request.raw_post,
+      signature: request.headers["Paddle-Signature"],
+      secret: ENV["PADDLE_WEBHOOK_SECRET"]
+    )
+    #=> Paddle::Event
+
+    case event.event_type
+    when "transaction.completed"
+      # event.data.id, event.data.customer_id, ...
+    when "subscription.canceled"
+      # ...
+    end
+
+    head :ok
+  rescue Paddle::Webhook::SignatureVerificationError
+    head :bad_request
+  end
+end
+
+# Or just verify the signature. verify! returns true or raises
+# Paddle::Webhook::SignatureVerificationError, and valid? returns true or false
+Paddle::Webhook.verify!(payload: payload, signature: signature, secret: secret)
+Paddle::Webhook.valid?(payload: payload, signature: signature, secret: secret)
+```
+
+Webhooks are rejected if their timestamp is more than 5 seconds from the current time, to stop old requests being
+replayed. You can change this with `tolerance:` (in seconds), or pass `tolerance: nil` to skip the check, for example
+when testing with a stored webhook.
+
 ### Webhook Simulation Types
 
 Retrieves a list of Simulation Types - <https://developer.paddle.com/api-reference/simulation-types/overview>
