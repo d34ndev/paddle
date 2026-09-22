@@ -625,8 +625,8 @@ Paddle::Simulation.list(notification_setting_id: "nftset_abc123")
 
 # Create a simulation
 # https://developer.paddle.com/api-reference/simulations/create-simulation
-Paddle::Simulation.create(notification_setting_id: "ntfset_abc123", name: "Customer Create", type: "customer.completed")
-Paddle::Simulation.create(notification_setting_id: "ntfset_abc123", name: "Subscription Created", type: "subscription_creation")
+Paddle::Simulation.create(setting_id: "ntfset_abc123", name: "Customer Create", type: "customer.completed")
+Paddle::Simulation.create(setting_id: "ntfset_abc123", name: "Subscription Created", type: "subscription_creation")
 
 # Retrieve a simulation
 Paddle::Simulation.retrieve(id: "ntfsim_abc123")
@@ -638,6 +638,7 @@ Paddle::Simulation.update(id: "ntfsim_abc123", status: "archived")
 
 # List all simulation runs
 Paddle::Simulation.runs(id: "ntfsim_abc123")
+Paddle::Simulation.runs(id: "ntfsim_abc123", per_page: 10, include: "events")
 
 # Create a simulation run
 # https://developer.paddle.com/api-reference/simulations/create-simulation-run
@@ -647,7 +648,8 @@ Paddle::SimulationRun.create(simulation_id: "ntfsim_abc123")
 Paddle::SimulationRun.retrieve(simulation_id: "ntfsim_abc123", id: "ntfsimrun_abc123")
 
 # List all simulation run events
-Paddle::SimulationRun.events(simulation_id: "ntfsim_abc123", run_id: "ntfsimrun_abc123")
+Paddle::SimulationRun.events(simulation_id: "ntfsim_abc123", id: "ntfsimrun_abc123")
+Paddle::SimulationRun.events(simulation_id: "ntfsim_abc123", id: "ntfsimrun_abc123", per_page: 10)
 
 # Replay a simulation run event
 # https://developer.paddle.com/api-reference/simulations/replay-simulation-run-event

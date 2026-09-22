@@ -22,8 +22,8 @@ module Paddle
         Simulation.new(response.body["data"])
       end
 
-      def runs(id:)
-        response = Client.get_request("simulations/#{id}/runs")
+      def runs(id:, **params)
+        response = Client.get_request("simulations/#{id}/runs", params: params)
         Collection.from_response(response, type: SimulationRun)
       end
     end

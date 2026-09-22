@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/simulations/ntfsim_01j82d983j814ypzx7m1fw2jpz/runs/ntfsimrun_01j82h13n87yq4fvz2rmsvhknc/events?per_page=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"ntfsimevt_01j82h13n87yq4fvz2rmsvhknd","status":"success","event_type":"subscription.created","payload":{},"request":{"body":"{}"},"response":{"body":"ok","status_code":200},"created_at":"2024-09-18T12:13:49.000000Z","updated_at":"2024-09-18T12:13:50.000000Z"}],"meta":{"request_id":"3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f","pagination":{"per_page":1,"next":"https://sandbox-api.paddle.com/simulations/ntfsim_01j82d983j814ypzx7m1fw2jpz/runs/ntfsimrun_01j82h13n87yq4fvz2rmsvhknc/events?after=ntfsimevt_01j82h13n87yq4fvz2rmsvhknd","has_more":true,"estimated_total":4}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

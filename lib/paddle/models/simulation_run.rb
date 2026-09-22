@@ -11,8 +11,8 @@ module Paddle
         SimulationRun.new(response.body["data"])
       end
 
-      def events(simulation_id:, id:)
-        response = Client.get_request("simulations/#{simulation_id}/runs/#{id}/events")
+      def events(simulation_id:, id:, **params)
+        response = Client.get_request("simulations/#{simulation_id}/runs/#{id}/events", params: params)
         Collection.from_response(response, type: SimulationRunEvent)
       end
     end
