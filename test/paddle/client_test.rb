@@ -39,4 +39,59 @@ class ClientTest < Minitest::Test
 
     assert_equal "txn_01", transaction.id
   end
+
+  AUTH_AND_VERSION = ->(r1, r2) {
+    r1.headers["Authorization"] == r2.headers["Authorization"] && r1.headers["Paddle-Version"] == r2.headers["Paddle-Version"]
+  }
+
+  def test_config_changes_after_the_first_request_take_effect
+    VCR.use_cassette("test_client_config_changes", match_requests_on: [ :method, :uri, AUTH_AND_VERSION ]) do
+      with_global_config(api_key: "pdl_sdbx_apikey_first") do
+        assert_equal "sandbox", Paddle::EventType.list.first.name
+
+        Paddle.config.api_key = "pdl_live_apikey_second"
+        Paddle.config.version = 2
+
+        assert_equal "production", Paddle::EventType.list.first.name
+      end
+    end
+  end
+
+  def test_connection_is_reused
+    assert_same Paddle::Client.connection, Paddle::Client.connection
+  end
+
+  def test_connection_per_environment
+    sandbox = Paddle::Client.connection
+
+    with_global_config(environment: :production) do
+      production = Paddle::Client.connection
+
+      refute_same sandbox, production
+      assert_equal "https://api.paddle.com/", production.url_prefix.to_s
+    end
+
+    assert_same sandbox, Paddle::Client.connection
+  end
+
+  def test_connection_per_connection_options
+    default = Paddle::Client.connection
+    Paddle.config.connection_options = { request: { timeout: 3 } }
+
+    refute_same default, Paddle::Client.connection
+    assert_equal 3, Paddle::Client.connection.options.timeout
+  ensure
+    Paddle.config.connection_options = {}
+  end
+
+  def test_connection_is_shared_across_threads
+    connections = 20.times.map { Thread.new { Paddle::Client.connection } }.map(&:value)
+
+    assert_equal 1, connections.uniq(&:object_id).size
+  end
+
+  def test_connection_does_not_store_credentials
+    refute Paddle::Client.connection.headers.key?("Authorization")
+    refute Paddle::Client.connection.headers.key?("Paddle-Version")
+  end
 end

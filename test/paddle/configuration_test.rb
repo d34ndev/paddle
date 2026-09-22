@@ -2,7 +2,12 @@ require "test_helper"
 
 class ConfigurationTest < Minitest::Test
   def setup
+    @saved_api_key = Paddle.config.api_key
     Paddle.config.api_key = "abc123"
+  end
+
+  def teardown
+    Paddle.config.api_key = @saved_api_key
   end
 
   def test_api_key
@@ -40,7 +45,6 @@ class ConfigurationTest < Minitest::Test
 
   def test_connection_options_passes_timeout_to_faraday
     Paddle.config.connection_options = { request: { timeout: 10, open_timeout: 5 } }
-    Paddle::Client.instance_variable_set(:@connection, nil)
 
     conn = Paddle::Client.connection
     assert_equal 10, conn.options.timeout
@@ -51,7 +55,6 @@ class ConfigurationTest < Minitest::Test
 
   def test_connection_options_passes_proxy_to_faraday
     Paddle.config.connection_options = { proxy: "http://localhost:8080" }
-    Paddle::Client.instance_variable_set(:@connection, nil)
 
     conn = Paddle::Client.connection
     assert_equal "http://localhost:8080", conn.proxy.uri.to_s
@@ -155,12 +158,10 @@ class ConfigurationTest < Minitest::Test
 
   private
 
-  # Rebuild a clean sandbox connection so VCR-backed tests in other
-  # files always hit sandbox-api.paddle.com regardless of test ordering.
+  # Restore the sandbox config so VCR-backed tests in other files
+  # always hit sandbox-api.paddle.com regardless of test ordering.
   def reset_client_connection
     Paddle.config.connection_options = {}
     Paddle.config.environment = :sandbox
-    Paddle::Client.instance_variable_set(:@connection, nil)
-    Paddle::Client.connection # force memoization with sandbox URL
   end
 end

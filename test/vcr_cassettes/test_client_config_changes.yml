@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/event-types
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer pdl_sdbx_apikey_first
+      Paddle-Version:
+      - '1'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"name":"sandbox","description":"","group":"","available_versions":[1]}],"meta":{"request_id":"x"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://api.paddle.com/event-types
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer pdl_live_apikey_second
+      Paddle-Version:
+      - '2'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"name":"production","description":"","group":"","available_versions":[1]}],"meta":{"request_id":"x"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0
