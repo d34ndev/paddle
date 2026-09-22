@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products?per_page=2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"pro_01","name":"Product pro_01","status":"active","tax_category":"standard"},{"id":"pro_02","name":"Product pro_02","status":"active","tax_category":"standard"}],"meta":{"request_id":"a1","pagination":{"per_page":2,"next":"https://sandbox-api.paddle.com/products?after=pro_02&per_page=2","has_more":true,"estimated_total":3}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products?after=pro_02&per_page=2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"pro_03","name":"Product pro_03","status":"active","tax_category":"standard"}],"meta":{"request_id":"a2","pagination":{"per_page":2,"next":"https://sandbox-api.paddle.com/products?after=pro_03&per_page=2","has_more":false,"estimated_total":3}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

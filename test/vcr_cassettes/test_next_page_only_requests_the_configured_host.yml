@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products?after=pro_01&per_page=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"pro_02","name":"Product pro_02","status":"active","tax_category":"standard"}],"meta":{"request_id":"a3","pagination":{"per_page":1,"next":"https://sandbox-api.paddle.com/products?after=pro_02&per_page=1","has_more":false,"estimated_total":2}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

@@ -68,6 +68,12 @@ results = Paddle::Product.list(per_page: 10)
 results.total
 #=> 10
 
+results.per_page
+#=> 10
+
+results.has_more?
+#=> true
+
 results.data
 #=> [#<Paddle::Product>, #<Paddle::Product>]
 
@@ -81,10 +87,28 @@ results.first
 results.last
 #=> #<Paddle::Product>
 
-# Retrieve the next page
+# Retrieve the next page. Returns nil when there are no more pages
+results.next_page
+#=> Paddle::Collection
+
+# Or use the after cursor directly
 Paddle::Product.list(per_page: 10, after: "abc123")
 #=> Paddle::Collection
+
+# Iterate over every result across all pages, fetching each page as it's needed
+Paddle::Product.list(per_page: 50).auto_paging_each do |product|
+  puts product.id
+end
+
+# Without a block, auto_paging_each returns an Enumerator. Pages are only fetched until a match is found
+Paddle::Customer.list.auto_paging_each.find { |customer| customer.email == "michael@mycompany.com" }
 ```
+
+>[!NOTE]
+>
+> `total` is Paddle's `estimated_total`. For lists of more than 100,000 results it's capped at `100001`,
+> and it's `-1` when Paddle can't count the results. Use `has_more?`, `next_page` or `auto_paging_each`
+> to page through results rather than relying on `total`.
 
 ### Caveats
 
