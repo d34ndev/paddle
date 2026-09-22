@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-api.paddle.com/metrics/explore
+    body:
+      encoding: UTF-8
+      string: '{"entity":"transactions.completed","from":"2026-05-01","to":"2026-08-01","interval":"month","dimensions":["product"],"measures":[{"field":"gross_revenue","agg":"sum"}],"order_by":[{"field":"gross_revenue","dir":"desc"}],"per_page":1}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"entity":"transactions.completed","interval":"month","currency_code":"USD","starts_at":"2026-05-01T00:00:00Z","ends_at":"2026-08-01T00:00:00Z","updated_at":"2026-08-01T06:00:00Z","fields":{"dimensions":[{"name":"product","type":"string"}],"measures":[{"name":"sum_gross_revenue","type":"currency","field":"gross_revenue","agg":"sum"}]},"series":[{"dimensions":{"product":"pro_01h1vjfevh5etwq3rb416a23h2"},"timeseries":[{"timestamp":"2026-05-01","measures":{"sum_gross_revenue":"410500"}},{"timestamp":"2026-06-01","measures":{"sum_gross_revenue":"455200"}}]}]},"meta":{"request_id":"e1","pagination":{"per_page":1,"next":"https://sandbox-api.paddle.com/metrics/explore?after=eyJvZmYiOjF9","has_more":true,"estimated_total":2}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: post
+    uri: https://sandbox-api.paddle.com/metrics/explore?after=eyJvZmYiOjF9
+    body:
+      encoding: UTF-8
+      string: '{"entity":"transactions.completed","from":"2026-05-01","to":"2026-08-01","interval":"month","dimensions":["product"],"measures":[{"field":"gross_revenue","agg":"sum"}],"order_by":[{"field":"gross_revenue","dir":"desc"}],"per_page":1}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"entity":"transactions.completed","interval":"month","currency_code":"USD","starts_at":"2026-05-01T00:00:00Z","ends_at":"2026-08-01T00:00:00Z","updated_at":"2026-08-01T06:00:00Z","fields":{"dimensions":[{"name":"product","type":"string"}],"measures":[{"name":"sum_gross_revenue","type":"currency","field":"gross_revenue","agg":"sum"}]},"series":[{"dimensions":{"product":"pro_01gsz4t5hdjse780zja8vvr7jg"},"timeseries":[{"timestamp":"2026-05-01","measures":{"sum_gross_revenue":"298400"}},{"timestamp":"2026-06-01","measures":{"sum_gross_revenue":"301250"}}]}]},"meta":{"request_id":"e2","pagination":{"per_page":1,"next":null,"has_more":false,"estimated_total":2}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

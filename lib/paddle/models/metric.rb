@@ -30,6 +30,20 @@ module Paddle
         get("checkout-conversion", from: from, to: to)
       end
 
+      # Lists the entities that can be queried with explore, with their dimensions and measures
+      def explore_entities(**params)
+        response = Client.get_request("metrics/explore/entities", params: params)
+        Collection.from_response(response, type: ExploreEntity)
+      end
+
+      # Runs an Explore query. from is inclusive and to is exclusive.
+      # measures is an array of hashes, e.g. [ { field: "gross_revenue", agg: "sum" } ]
+      def explore(entity:, from:, to:, measures:, **params)
+        query = { entity: entity, from: from, to: to, measures: measures }.merge(params)
+        response = Client.post_request("metrics/explore", body: query)
+        ExploreResult.from_response(response, query: query)
+      end
+
       private
 
       def get(metric, from:, to:)

@@ -52,6 +52,8 @@ module Paddle
   autoload :PaymentMethod, "paddle/models/payment_method"
   autoload :ClientToken, "paddle/models/client_token"
   autoload :Metric, "paddle/models/metric"
+  autoload :ExploreEntity, "paddle/models/explore_entity"
+  autoload :ExploreResult, "paddle/models/explore_result"
 
   autoload :NotificationLog, "paddle/models/notification_log"
   autoload :CreditBalance, "paddle/models/credit_balance"

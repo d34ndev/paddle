@@ -703,6 +703,48 @@ Paddle::Metric.chargebacks(from: "2025-09-01", to: "2025-09-05")                
 Paddle::Metric.checkout_conversion(from: "2025-09-01", to: "2025-09-05")              # count, completed_count and rate
 ```
 
+#### Explore
+
+Explore lets you run your own queries against your account data. Pick an entity and one or more measures,
+then optionally filter the results and break them down by dimensions. Each combination of dimension values is a
+segment, returned as one entry in `series`.
+
+```ruby
+# List the entities you can query, with their dimensions, measures and allowed intervals
+# https://developer.paddle.com/api-reference/metrics/list-explore-metric-entities
+Paddle::Metric.explore_entities
+Paddle::Metric.explore_entities(entity: "transactions.completed")
+
+# Run a query. from is inclusive and to is exclusive. interval can be day, week or month (the default)
+# https://developer.paddle.com/api-reference/metrics/run-explore-metrics-query
+result = Paddle::Metric.explore(
+  entity: "transactions.completed",
+  from: "2026-05-01",
+  to: "2026-08-01",
+  interval: "month",
+  measures: [ { field: "gross_revenue", agg: "sum" } ],
+  dimensions: [ "product" ],
+  order_by: [ { field: "gross_revenue", dir: "desc" } ],
+  filters: [ { field: "country", operator: "in", value: [ "GB", "US" ] } ]
+)
+#=> Paddle::ExploreResult
+
+result.series.each do |segment|
+  puts segment.dimensions.product
+  segment.timeseries.each { |point| puts "  #{point.timestamp}: #{point.measures.sum_gross_revenue}" }
+end
+
+# Results are paged by segment, 5 per page by default (max 50 using per_page)
+result.has_more?
+result.next_page
+#=> Paddle::ExploreResult
+
+# Iterate over every segment across all pages
+result.auto_paging_each do |segment|
+  puts segment.dimensions.product
+end
+```
+
 ### Webhook Simulation Types
 
 Retrieves a list of Simulation Types - <https://developer.paddle.com/api-reference/simulation-types/overview>

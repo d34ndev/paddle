@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/explore/entities?entity=adjustments.chargebacks
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"entity":"adjustments.chargebacks","time_dimension":{"intervals":["day","week","month"],"max_lookback_days":1096},"dimensions":[{"name":"product","type":"string","filter_ops":["in"],"multi_valued":true}],"measures":[{"name":"id","type":"string","aggs":["count","count_distinct"]}]}],"meta":{"request_id":"ecd52aa1-a73c-43df-af3b-e87edec3b435"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0
