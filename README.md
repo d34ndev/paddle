@@ -49,6 +49,29 @@ If you do set an environment that doesn't match the key, such as `:production` w
 an `ArgumentError` is raised straight away, since those requests would always fail. Older API keys don't have a
 prefix, so set the environment for them as before. It defaults to `:production`.
 
+### Using Multiple API Keys
+
+To make requests with a different API key, environment or version, such as for another Paddle account,
+wrap them in `Paddle.with_config`. Everything in the block uses the given options over the global config:
+
+```ruby
+Paddle.with_config(api_key: account.paddle_api_key) do
+  Paddle::Subscription.list(status: "active")
+end
+
+# Blocks can be nested, and you can change the environment or version too
+Paddle.with_config(api_key: "pdl_live_apikey_...", version: 1) do
+  Paddle::Product.list
+end
+```
+
+When a new API key is given without an environment, the environment is detected from the key. For older keys
+without a prefix, the current environment is kept.
+
+The config is stored per thread and fiber, so it's safe to use in multi-threaded servers like Puma and job
+runners like Sidekiq. Concurrent requests never see each other's keys. Threads and fibers started inside the
+block use the same config. `Paddle.configure` always changes the global config, even inside a block.
+
 ### Connection Options
 
 You can pass [options](https://lostisland.github.io/faraday/#/customization/connection-options) to the underlying [Faraday](https://lostisland.github.io/faraday/) connection using `connection_options`. This is useful for setting timeouts, proxies, or SSL configuration:

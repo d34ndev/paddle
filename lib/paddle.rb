@@ -20,12 +20,33 @@ module Paddle
     attr_writer :config
   end
 
+  # Configures the global config, even inside a with_config block
   def self.configure
-    yield(config) if block_given?
+    yield(global_config) if block_given?
   end
 
+  # The config for the current request: the with_config override if there is one, or the global config
   def self.config
+    Fiber[:paddle_config] || global_config
+  end
+
+  def self.global_config
     @config ||= Paddle::Configuration.new
+  end
+
+  # Uses a different API key, environment or version for everything in the block, e.g. to make
+  # requests for another Paddle account. The override is stored in fiber storage, so it only
+  # applies to the current thread or fiber, and to threads and fibers started inside the block.
+  #
+  #   Paddle.with_config(api_key: account.paddle_api_key) do
+  #     Paddle::Subscription.list
+  #   end
+  def self.with_config(**options)
+    previous = Fiber[:paddle_config]
+    Fiber[:paddle_config] = config.merge(**options)
+    yield
+  ensure
+    Fiber[:paddle_config] = previous
   end
 
   # Load Billing APIs

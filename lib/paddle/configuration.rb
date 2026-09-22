@@ -43,6 +43,29 @@ module Paddle
       end
     end
 
+    MERGEABLE = [ :api_key, :environment, :version, :connection_options ].freeze
+
+    # Returns a new Configuration with the given options applied over this one. When a new
+    # API key is given without an environment, the environment is detected from the key,
+    # or kept from this config for older keys without a prefix
+    def merge(**options)
+      unknown = options.keys - MERGEABLE
+      raise ArgumentError, "Unknown config options: #{unknown.join(", ")}" if unknown.any?
+
+      config = Configuration.new
+      config.version = options.fetch(:version, version)
+      config.connection_options = options.fetch(:connection_options, connection_options)
+      config.api_key = options.fetch(:api_key, api_key)
+
+      if options.key?(:environment)
+        config.environment = options[:environment]
+      elsif !options.key?(:api_key) || config.key_environment.nil?
+        config.environment = environment
+      end
+
+      config
+    end
+
     def url
       case @environment
       when :production
@@ -52,7 +75,7 @@ module Paddle
       end
     end
 
-    private
+    protected
 
     # API keys created since May 2025 start with pdl_live_ or pdl_sdbx_. Older keys have no prefix
     def key_environment
@@ -61,6 +84,8 @@ module Paddle
       when /\Apdl_sdbx_/ then :sandbox
       end
     end
+
+    private
 
     def check_key_matches!(env)
       key_env = key_environment
