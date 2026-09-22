@@ -954,7 +954,7 @@ or [here for sandbox](https://sandbox-vendors.paddle.com/authentication)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/deanpcmad/paddle>.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/d34ndev/paddle>.
 
 ## License
 

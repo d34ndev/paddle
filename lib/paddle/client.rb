@@ -43,7 +43,7 @@ module Paddle
 
       def create_connection(config)
         Faraday.new(config.url, config.connection_options) do |conn|
-          conn.headers = { "User-Agent" => "paddle/v#{VERSION} (github.com/deanpcmad/paddle)" }
+          conn.headers = { "User-Agent" => "paddle/v#{VERSION} (github.com/d34ndev/paddle)" }
           conn.request :json
           conn.response :json
         end

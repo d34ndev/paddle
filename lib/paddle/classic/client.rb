@@ -71,7 +71,7 @@ module Paddle
       def connection
         @connection ||= Faraday.new(url) do |conn|
           conn.headers = {
-            "User-Agent" => "paddle/v#{VERSION} (github.com/deanpcmad/paddle)"
+            "User-Agent" => "paddle/v#{VERSION} (github.com/d34ndev/paddle)"
           }
 
           conn.request :url_encoded
