@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products/pro_01h7zcgmdc6tmwtjehp3sh7azf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 502
+      message: Bad Gateway
+    headers:
+      content-type:
+      - text/html
+    body:
+      encoding: UTF-8
+      string: '<html><head><title>502 Bad Gateway</title></head><body><center><h1>502 Bad Gateway</h1></center><hr><center>cloudflare</center></body></html>'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products/pro_01h7zcgmdc6tmwtjehp3sh7azf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"error":{"type":"request_error","code":"invalid_field","detail":"The request could not be processed.","documentation_url":"https://developer.paddle.com/errors/shared/invalid_field"},"meta":{"request_id":"1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

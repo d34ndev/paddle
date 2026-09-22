@@ -49,8 +49,7 @@ module Paddle
       end
 
       def error?(response)
-        [ 400, 401, 403, 404, 409, 429, 500, 501, 503 ].include?(response.status) ||
-          response.body&.key?("error")
+        !response.success? || (response.body.is_a?(Hash) && response.body.key?("error"))
       end
 
       def raise_error(response)

@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/products/pro_01h7zcgmdc6tmwtjehp3sh7azf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 504
+      message: Gateway Timeout
+    headers:
+      content-type:
+      - text/html
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

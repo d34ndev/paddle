@@ -8,7 +8,8 @@ module Paddle
     attr_reader :request_id
 
     def initialize(response_body, http_status_code)
-      @response_body = response_body
+      # Non-JSON responses (e.g. an HTML page from a gateway) have no Paddle error details
+      @response_body = response_body.is_a?(Hash) ? response_body : {}
       @http_status_code = http_status_code
       set_paddle_error_values
       super(build_message)
@@ -25,9 +26,7 @@ module Paddle
     end
 
     def error_message
-      @paddle_error_message || @response_body.dig("error", "code")
-    rescue NoMethodError
-      "An unknown error occurred."
+      @paddle_error_message || @paddle_error_code || "An unknown error occurred."
     end
 
     def build_message
