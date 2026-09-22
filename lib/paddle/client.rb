@@ -8,6 +8,10 @@ module Paddle
       end
 
       def get_request(url, params: {}, headers: {})
+        # skip_count is sent as a header rather than a query param
+        params = params.dup
+        headers = headers.merge("Skip-Count" => "true") if params.delete(:skip_count)
+
         handle_response(connection.get(url, params, headers))
       end
 

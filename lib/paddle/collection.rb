@@ -17,24 +17,30 @@ module Paddle
           per_page: pagination["per_page"],
           has_more: pagination["has_more"],
           next_url: pagination["next"],
-          type: type
+          type: type,
+          skip_count: response.env.request_headers["Skip-Count"] == "true"
         )
       else
         new(data: data, total: data.count)
       end
     end
 
-    def initialize(data:, total:, per_page: nil, has_more: false, next_url: nil, type: nil)
+    def initialize(data:, total:, per_page: nil, has_more: false, next_url: nil, type: nil, skip_count: false)
       @data = data
       @total = total
       @per_page = per_page
       @has_more = has_more
       @next_url = next_url
       @type = type
+      @skip_count = skip_count
     end
 
     def has_more?
       @has_more == true
+    end
+
+    def skip_count?
+      @skip_count
     end
 
     # Paddle returns a next URL even on the last page, so has_more is checked first
@@ -42,7 +48,7 @@ module Paddle
       return unless has_more? && next_url && @type
 
       # Only the path and query are used, so requests always go to the configured API host
-      response = Client.get_request(URI(next_url).request_uri.delete_prefix("/"))
+      response = Client.get_request(URI(next_url).request_uri.delete_prefix("/"), params: { skip_count: skip_count? })
       Collection.from_response(response, type: @type)
     end
 

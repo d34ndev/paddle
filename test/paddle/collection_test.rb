@@ -70,4 +70,25 @@ class CollectionTest < Minitest::Test
 
     assert_equal [ "pro_02" ], next_page.map(&:id)
   end
+
+  SKIP_COUNT_MATCHER = [ :method, :uri, ->(r1, r2) { r1.headers["Skip-Count"] == r2.headers["Skip-Count"] } ]
+
+  def test_skip_count
+    VCR.use_cassette("test_collection_skip_count", match_requests_on: SKIP_COUNT_MATCHER) do
+      products = Paddle::Product.list(per_page: 2, skip_count: true)
+
+      assert_equal(-1, products.total)
+      assert products.skip_count?
+      assert_equal [ "pro_01", "pro_02", "pro_03" ], products.auto_paging_each.map(&:id)
+    end
+  end
+
+  def test_without_skip_count
+    VCR.use_cassette("test_collection_without_skip_count", match_requests_on: SKIP_COUNT_MATCHER) do
+      products = Paddle::Product.list(per_page: 2)
+
+      assert_equal 3, products.total
+      refute products.skip_count?
+    end
+  end
 end

@@ -110,6 +110,16 @@ Paddle::Customer.list.auto_paging_each.find { |customer| customer.email == "mich
 > and it's `-1` when Paddle can't count the results. Use `has_more?`, `next_page` or `auto_paging_each`
 > to page through results rather than relying on `total`.
 
+If you don't need `total`, pass `skip_count: true` to any list method. This sends the `Skip-Count` header,
+so Paddle skips counting the results and responds faster. `total` will be `-1`, and `next_page` and
+`auto_paging_each` keep sending the header for later pages.
+
+```ruby
+Paddle::Transaction.list(skip_count: true).auto_paging_each do |transaction|
+  puts transaction.id
+end
+```
+
 ### Caveats
 
 >[!NOTE]
