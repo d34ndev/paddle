@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/monthly-recurring-revenue?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"monthly_recurring_revenue"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/monthly-recurring-revenue-change?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"monthly_recurring_revenue_change"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/active-subscribers?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"active_subscribers"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/revenue?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"revenue"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/refunds?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"refunds"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/chargebacks?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"chargebacks"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/metrics/checkout-conversion?from=2025-09-01&to=2025-09-02
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"timeseries":[{"timestamp":"2025-09-01T00:00:00Z","metric":"checkout_conversion"}],"starts_at":"2025-09-01T00:00:00Z","ends_at":"2025-09-02T00:00:00Z","interval":"day","updated_at":"2025-09-01T20:30:00Z"},"meta":{"request_id":"r"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

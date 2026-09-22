@@ -679,6 +679,30 @@ Paddle::Report.create(
 )
 ```
 
+### Metrics
+
+Daily metrics for your account. `from` and `to` are dates, as a string like `"2025-09-01"` or a `Date`.
+`from` is inclusive and `to` is exclusive, and you can query up to 3 years in the past.
+Your API key needs the `metrics.read` permission.
+
+```ruby
+# https://developer.paddle.com/api-reference/metrics/overview
+metric = Paddle::Metric.monthly_recurring_revenue(from: "2025-09-01", to: "2025-09-05")
+#=> #<Paddle::Metric interval="day", currency_code="USD", starts_at=..., ends_at=..., timeseries=[...]>
+
+metric.timeseries.each do |point|
+  puts "#{point.timestamp}: #{point.amount}"
+end
+
+# Amounts are strings in the smallest currency unit, e.g. cents
+Paddle::Metric.monthly_recurring_revenue_change(from: "2025-09-01", to: "2025-09-05") # amount
+Paddle::Metric.revenue(from: "2025-09-01", to: "2025-09-05")                          # amount and count
+Paddle::Metric.refunds(from: "2025-09-01", to: "2025-09-05")                          # amount
+Paddle::Metric.active_subscribers(from: "2025-09-01", to: "2025-09-05")               # count
+Paddle::Metric.chargebacks(from: "2025-09-01", to: "2025-09-05")                      # count
+Paddle::Metric.checkout_conversion(from: "2025-09-01", to: "2025-09-05")              # count, completed_count and rate
+```
+
 ### Webhook Simulation Types
 
 Retrieves a list of Simulation Types - <https://developer.paddle.com/api-reference/simulation-types/overview>
