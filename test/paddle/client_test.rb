@@ -46,7 +46,7 @@ class ClientTest < Minitest::Test
 
   def test_config_changes_after_the_first_request_take_effect
     VCR.use_cassette("test_client_config_changes", match_requests_on: [ :method, :uri, AUTH_AND_VERSION ]) do
-      with_global_config(api_key: "pdl_sdbx_apikey_first") do
+      with_global_config(api_key: "pdl_sdbx_apikey_first", version: 1) do
         assert_equal "sandbox", Paddle::EventType.list.first.name
 
         Paddle.config.api_key = "pdl_live_apikey_second"

@@ -1,13 +1,18 @@
 require "test_helper"
 
 class ConfigurationTest < Minitest::Test
+  # These tests change the global config, so restore it for tests in other files
   def setup
-    @saved_api_key = Paddle.config.api_key
+    @saved = { api_key: Paddle.config.api_key, environment: Paddle.config.environment, version: Paddle.config.version }
     Paddle.config.api_key = "abc123"
   end
 
   def teardown
-    Paddle.config.api_key = @saved_api_key
+    Paddle.config.environment = nil
+    Paddle.config.api_key = @saved[:api_key]
+    Paddle.config.environment = @saved[:environment]
+    Paddle.config.version = @saved[:version]
+    Paddle.config.connection_options = {}
   end
 
   def test_api_key
@@ -49,8 +54,6 @@ class ConfigurationTest < Minitest::Test
     conn = Paddle::Client.connection
     assert_equal 10, conn.options.timeout
     assert_equal 5, conn.options.open_timeout
-  ensure
-    reset_client_connection
   end
 
   def test_connection_options_passes_proxy_to_faraday
@@ -58,8 +61,6 @@ class ConfigurationTest < Minitest::Test
 
     conn = Paddle::Client.connection
     assert_equal "http://localhost:8080", conn.proxy.uri.to_s
-  ensure
-    reset_client_connection
   end
 
   LIVE_KEY = "pdl_live_apikey_fake_live_key_for_tests"
@@ -154,14 +155,5 @@ class ConfigurationTest < Minitest::Test
     config.api_key = LIVE_KEY
 
     assert_equal :production, config.environment
-  end
-
-  private
-
-  # Restore the sandbox config so VCR-backed tests in other files
-  # always hit sandbox-api.paddle.com regardless of test ordering.
-  def reset_client_connection
-    Paddle.config.connection_options = {}
-    Paddle.config.environment = :sandbox
   end
 end
