@@ -1,0 +1,23 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-api.paddle.com/adjustments
+    body:
+      encoding: UTF-8
+      string: '{"transaction_id":"txn_01h7e0r43zjgzbcpqs093spymc","action":"refund","reason":"error","type":"full"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"adj_01jd1tz1f3j6tqbvxfpd8a7m4c","action":"refund","type":"full","transaction_id":"txn_01h7e0r43zjgzbcpqs093spymc","subscription_id":null,"customer_id":"ctm_01h7dth5z8q7df4r73r4jek70g","reason":"error","credit_applied_to_balance":null,"currency_code":"USD","status":"pending_approval","items":[{"id":"adjitm_01jd1tz1f3j6tqbvxfpd8a7m4d","item_id":"txnitm_01h7e0rc8we655bjx8km2kpyg0","type":"full","amount":"2499","proration":null,"totals":{"subtotal":"2499","tax":"0","total":"2499"}}],"totals":{"subtotal":"2499","tax":"0","total":"2499","fee":"0","earnings":"0","currency_code":"USD"},"payout_totals":null,"tax_rates_used":[],"created_at":"2024-12-05T10:00:00.000Z","updated_at":"2024-12-05T10:00:00.000Z"},"meta":{"request_id":"5c3d2a1e-8f6b-4d9a-b7c1-2e3f4a5b6c7d"}}'
+  recorded_at: Thu, 05 Dec 2024 10:00:00 GMT
+recorded_with: VCR 6.2.0

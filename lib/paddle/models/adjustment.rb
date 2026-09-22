@@ -6,8 +6,10 @@ module Paddle
         Collection.from_response(response, type: Adjustment)
       end
 
-      def create(transaction_id:, action:, reason:, items:, **params)
-        attrs = { transaction_id: transaction_id, action: action, reason: reason, items: items }
+      # items can be omitted when type is "full"
+      def create(transaction_id:, action:, reason:, items: nil, **params)
+        attrs = { transaction_id: transaction_id, action: action, reason: reason }
+        attrs[:items] = items if items
         response = Client.post_request("adjustments", body: attrs.merge(params))
         Adjustment.new(response.body["data"])
       end

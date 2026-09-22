@@ -25,4 +25,19 @@ class AdjustmentTest < Minitest::Test
     assert_equal Paddle::Adjustment, adjustment.class
     assert_equal "credit", adjustment.action
   end
+
+  def test_adjustment_create_full
+    VCR.use_cassette("test_adjustment_create_full_without_items", match_requests_on: [ :method, :uri, :body ]) do
+      adjustment = Paddle::Adjustment.create(
+        action: "refund",
+        transaction_id: "txn_01h7e0r43zjgzbcpqs093spymc",
+        reason: "error",
+        type: "full"
+      )
+
+      assert_equal Paddle::Adjustment, adjustment.class
+      assert_equal "full", adjustment.type
+      assert_equal "2499", adjustment.totals.total
+    end
+  end
 end

@@ -471,6 +471,14 @@ Paddle::Adjustment.create(
   ]
 )
 
+# Refund or credit the grand total of a transaction without specifying items
+Paddle::Adjustment.create(
+  action: "refund",
+  transaction_id: "txn_abc123",
+  reason: "Requested by customer",
+  type: "full"
+)
+
 # Get a credit note for an adjustment
 # disposition defaults to "attachment"
 # Returns a raw URL. This URL is not permanent and will expire.
