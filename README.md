@@ -417,6 +417,17 @@ Paddle::Transaction.preview(items: [ { price_id: "pri_123abc", quantity: 5 } ])
 # https://developer.paddle.com/api-reference/transaction/get-invoice-pdf
 Paddle::Transaction.invoice(id: "txn_abc123", disposition: "inline")
 #=> https://paddle-sandbox-invoice...
+
+# Revise customer, business and address details on a billed or completed transaction
+# Only address lines, city and region can be changed, and a transaction can only be revised once.
+# The related customer, business and address records aren't updated
+# https://developer.paddle.com/api-reference/transactions/revise-transaction
+Paddle::Transaction.revise(
+  id: "txn_abc123",
+  customer: { name: "Sam Miller" },
+  business: { tax_identifier: "AB0123456789" },
+  address: { first_line: "3811 Ditmars Blvd" }
+)
 ```
 
 ### Subscriptions

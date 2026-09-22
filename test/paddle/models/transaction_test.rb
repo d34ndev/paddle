@@ -77,4 +77,19 @@ class TransactionTest < Minitest::Test
     assert_equal Paddle::Transaction, transaction.class
     assert_equal 2, transaction.items.first.quantity
   end
+
+  def test_transaction_revise
+    VCR.use_cassette("test_transaction_revise_request", match_requests_on: [ :method, :uri, :body ]) do
+      transaction = Paddle::Transaction.revise(
+        id: "txn_01h7e0r43zjgzbcpqs093spymc",
+        customer: { name: "Sam Miller" },
+        business: { tax_identifier: "AB0123456789" },
+        address: { first_line: "3811 Ditmars Blvd" }
+      )
+
+      assert_equal Paddle::Transaction, transaction.class
+      assert_equal "txn_01h7e0r43zjgzbcpqs093spymc", transaction.id
+      assert_equal "2026-09-22T10:00:00.000Z", transaction.revised_at
+    end
+  end
 end
