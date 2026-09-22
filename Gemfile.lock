@@ -3,7 +3,7 @@ PATH
   specs:
     paddle (2.10)
       cgi
-      faraday (>= 2.14.2, < 3)
+      faraday (>= 2.14.3, < 3)
       ostruct (~> 0.6.0)
 
 GEM
