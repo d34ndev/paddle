@@ -40,4 +40,16 @@ class AdjustmentTest < Minitest::Test
       assert_equal "2499", adjustment.totals.total
     end
   end
+
+  def test_adjustment_credit_note
+    credit_note = Paddle::Adjustment.credit_note(id: "adj_01h7e2wz3srndp9f5ttbgn6dhp")
+
+    assert_equal "https://paddle-sandbox-invoice-service-pdfs.s3.amazonaws.com/credit-note.pdf", credit_note
+  end
+
+  def test_adjustment_credit_note_inline
+    credit_note = Paddle::Adjustment.credit_note(id: "adj_01h7e2wz3srndp9f5ttbgn6dhp", disposition: "inline")
+
+    assert_equal "https://paddle-sandbox-invoice-service-pdfs.s3.amazonaws.com/credit-note.pdf", credit_note
+  end
 end

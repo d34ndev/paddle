@@ -71,4 +71,11 @@ class ErrorTest < Minitest::Test
     assert_nil error.documentation_url
     assert_nil error.request_id
   end
+
+  def test_service_unavailable_error
+    error = Paddle::ErrorFactory.create({}, 503)
+
+    assert_instance_of Paddle::Errors::ServiceUnavailableError, error
+    assert_equal "Error 503: The Paddle API is temporarily unavailable. Try again later.", error.message
+  end
 end

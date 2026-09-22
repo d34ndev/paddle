@@ -33,6 +33,12 @@ class TransactionTest < Minitest::Test
     assert_match (/paddle-sandbox-invoice-service-pdfs/), invoice
   end
 
+  def test_transaction_invoice_inline
+    invoice = Paddle::Transaction.invoice(id: "txn_01h7e2wz65er1fwbkqbzpng9th", disposition: "inline")
+
+    assert_equal "https://paddle-sandbox-invoice-service-pdfs.s3.amazonaws.com/invoice.pdf", invoice
+  end
+
   def test_transaction_create
     transaction = Paddle::Transaction.create(
       items: [

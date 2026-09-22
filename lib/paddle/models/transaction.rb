@@ -31,10 +31,8 @@ module Paddle
       end
 
       def invoice(id:, disposition: "attachment")
-        response = Client.get_request("transactions/#{id}/invoice?disposition=#{disposition}")
-        if response.success?
-          response.body["data"]["url"]
-        end
+        response = Client.get_request("transactions/#{id}/invoice", params: { disposition: disposition })
+        response.body["data"]["url"]
       end
 
       def preview(items:, **params)

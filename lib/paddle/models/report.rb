@@ -19,9 +19,7 @@ module Paddle
 
       def csv(id:)
         response = Client.get_request("reports/#{id}/download-url")
-        if response.success?
-          response.body["data"]["url"]
-        end
+        response.body["data"]["url"]
       end
     end
   end

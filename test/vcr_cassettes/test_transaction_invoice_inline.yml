@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/transactions/txn_01h7e2wz65er1fwbkqbzpng9th/invoice?disposition=inline
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"url":"https://paddle-sandbox-invoice-service-pdfs.s3.amazonaws.com/invoice.pdf"},"meta":{"request_id":"d"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

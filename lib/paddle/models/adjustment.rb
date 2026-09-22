@@ -15,10 +15,8 @@ module Paddle
       end
 
       def credit_note(id:, disposition: "attachment")
-        response = Client.get_request("adjustments/#{id}/credit-note?disposition=#{disposition}")
-        if response.success?
-          response.body["data"]["url"]
-        end
+        response = Client.get_request("adjustments/#{id}/credit-note", params: { disposition: disposition })
+        response.body["data"]["url"]
       end
     end
   end

@@ -120,7 +120,7 @@ module Paddle
       private
 
       def error_message
-        "You have been rate limited for sending more than 20 requests per second."
+        "The Paddle API is temporarily unavailable. Try again later."
       end
     end
 
