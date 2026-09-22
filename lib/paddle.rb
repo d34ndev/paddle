@@ -55,6 +55,7 @@ module Paddle
   autoload :NotificationLog, "paddle/models/notification_log"
   autoload :CreditBalance, "paddle/models/credit_balance"
   autoload :CustomerAuthToken, "paddle/models/customer_auth_token"
+  autoload :SubscriptionHistory, "paddle/models/subscription_history"
 
   # Load Classic APIs
   module Classic

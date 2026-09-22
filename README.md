@@ -491,6 +491,18 @@ Paddle::Subscription.cancel(id: "sub_abc123", effective_from: "immediately")
 # Activate a trialing subscription
 # https://developer.paddle.com/api-reference/subscriptions/activate-subscription
 Paddle::Subscription.activate(id: "sub_abc123")
+
+# List the history of a subscription, newest first
+# Returns a Paddle::Collection of Paddle::SubscriptionHistory
+# https://developer.paddle.com/api-reference/subscription-history/list-subscription-history
+Paddle::Subscription.history(id: "sub_abc123")
+Paddle::Subscription.history(id: "sub_abc123", action: "subscription_created,subscription_canceled")
+Paddle::Subscription.history(id: "sub_abc123", source: "customer_portal", actor_type: "customer")
+Paddle::Subscription.history(id: "sub_abc123", "occurred_at[GTE]": "2026-01-01T00:00:00Z")
+
+Paddle::Subscription.history(id: "sub_abc123").auto_paging_each do |entry|
+  puts "#{entry.occurred_at} #{entry.detail.action} by #{entry.actor.type} via #{entry.source}"
+end
 ```
 
 ### Customer Portal Sessions

@@ -12,6 +12,11 @@ module Paddle
         Subscription.new(response.body["data"])
       end
 
+      def history(id:, **params)
+        response = Client.get_request("subscriptions/#{id}/history", params: params)
+        Collection.from_response(response, type: SubscriptionHistory)
+      end
+
       def get_transaction(id:)
         response = Client.get_request("subscriptions/#{id}/update-payment-method-transaction")
         Transaction.new(response.body["data"])

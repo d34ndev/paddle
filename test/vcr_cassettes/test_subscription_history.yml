@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/subscriptions/sub_01h04vsc0qhwtsbsxh3422wjs4/history?action=subscription_canceled&per_page=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"subhis_01kagxfkdpvsdvnm7xw4avwvsp","group_id":"subhisgrp_01kagxffkcme9fhd6srqgkmssd","subscription_id":"sub_01h04vsc0qhwtsbsxh3422wjs4","occurred_at":"2024-10-12T07:20:50.52Z","source":"api","actor":{"type":"api_key","id":"apikey_01gm106t1bsn8gcfkjhk6ecfng"},"reason":"customer_request","detail":{"action":"subscription_canceled"}}],"meta":{"request_id":"6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c","pagination":{"per_page":1,"next":"https://sandbox-api.paddle.com/subscriptions/sub_01h04vsc0qhwtsbsxh3422wjs4/history?action=subscription_canceled&after=subhis_01kagxfkdpvsdvnm7xw4avwvsp&per_page=1","has_more":true,"estimated_total":-1}}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0

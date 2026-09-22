@@ -126,4 +126,16 @@ class SubscriptionTest < Minitest::Test
     assert_equal "active", subscription.status
     assert_equal "sub_01hd1drf5htjz45yt2346anmqt", subscription.id
   end
+
+  def test_subscription_history
+    history = Paddle::Subscription.history(id: "sub_01h04vsc0qhwtsbsxh3422wjs4", action: "subscription_canceled", per_page: 1)
+
+    assert_equal Paddle::Collection, history.class
+    assert_equal Paddle::SubscriptionHistory, history.first.class
+    assert_equal "subhis_01kagxfkdpvsdvnm7xw4avwvsp", history.first.id
+    assert_equal "api", history.first.source
+    assert_equal "api_key", history.first.actor.type
+    assert_equal "subscription_canceled", history.first.detail.action
+    assert history.has_more?
+  end
 end
