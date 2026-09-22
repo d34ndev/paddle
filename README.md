@@ -573,9 +573,11 @@ Paddle::Notification.list(status: "failed")
 Paddle::Notification.retrieve(id: "ntf_abc123")
 
 # Replay a notification
-# Attempts to resend a notification
-# (currently not working)
+# Creates a new notification for the same event. Only delivered or failed notifications
+# with an origin of "event" can be replayed. Returns the new notification_id
+# https://developer.paddle.com/api-reference/notifications/replay-notification
 Paddle::Notification.replay(id: "ntf_abc123")
+#=> #<Paddle::Notification notification_id="ntf_abc456">
 
 # List all logs for a notification
 # https://developer.paddle.com/api-reference/notifications/list-notification-logs

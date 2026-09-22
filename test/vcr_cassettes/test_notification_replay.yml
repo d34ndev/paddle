@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-api.paddle.com/notifications/ntf_01h8bkrfe7w1vwf8xmytwn51e7/replay
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers: {}
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"notification_id":"ntf_01h46h1s2zabpkdks7yt4vkgkc"},"meta":{"request_id":"cfe92cac-86a1-49fe-ac50-20620dcd024f"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0
