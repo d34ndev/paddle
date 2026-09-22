@@ -33,6 +33,22 @@ Paddle.configure do |config|
 end
 ```
 
+API keys created since May 2025 start with `pdl_live_` or `pdl_sdbx_`, so the environment is detected from the key
+and you don't need to set it:
+
+```ruby
+Paddle.configure do |config|
+  config.api_key = "pdl_sdbx_apikey_..."
+end
+
+Paddle.config.environment
+#=> :sandbox
+```
+
+If you do set an environment that doesn't match the key, such as `:production` with a `pdl_sdbx_` key,
+an `ArgumentError` is raised straight away, since those requests would always fail. Older API keys don't have a
+prefix, so set the environment for them as before. It defaults to `:production`.
+
 ### Connection Options
 
 You can pass [options](https://lostisland.github.io/faraday/#/customization/connection-options) to the underlying [Faraday](https://lostisland.github.io/faraday/) connection using `connection_options`. This is useful for setting timeouts, proxies, or SSL configuration:

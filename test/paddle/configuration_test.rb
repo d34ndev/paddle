@@ -59,6 +59,100 @@ class ConfigurationTest < Minitest::Test
     reset_client_connection
   end
 
+  LIVE_KEY = "pdl_live_apikey_fake_live_key_for_tests"
+  SANDBOX_KEY = "pdl_sdbx_apikey_fake_sandbox_key_for_tests"
+  LEGACY_KEY = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5"
+
+  def test_sandbox_key_sets_sandbox_environment
+    config = Paddle::Configuration.new
+    config.api_key = SANDBOX_KEY
+
+    assert_equal :sandbox, config.environment
+    assert_equal "https://sandbox-api.paddle.com", config.url
+  end
+
+  def test_live_key_sets_production_environment
+    config = Paddle::Configuration.new
+    config.api_key = LIVE_KEY
+
+    assert_equal :production, config.environment
+    assert_equal "https://api.paddle.com", config.url
+  end
+
+  def test_legacy_key_defaults_to_production
+    config = Paddle::Configuration.new
+    config.api_key = LEGACY_KEY
+
+    assert_equal :production, config.environment
+  end
+
+  def test_legacy_key_with_explicit_sandbox_environment
+    config = Paddle::Configuration.new
+    config.environment = :sandbox
+    config.api_key = LEGACY_KEY
+
+    assert_equal :sandbox, config.environment
+  end
+
+  def test_matching_explicit_environment_in_either_order
+    config = Paddle::Configuration.new
+    config.environment = :sandbox
+    config.api_key = SANDBOX_KEY
+    assert_equal :sandbox, config.environment
+
+    config = Paddle::Configuration.new
+    config.api_key = SANDBOX_KEY
+    config.environment = :development
+    assert_equal :development, config.environment
+
+    config = Paddle::Configuration.new
+    config.api_key = LIVE_KEY
+    config.environment = :production
+    assert_equal :production, config.environment
+  end
+
+  def test_sandbox_key_with_production_environment_raises
+    config = Paddle::Configuration.new
+    config.environment = :production
+
+    error = assert_raises(ArgumentError) { config.api_key = SANDBOX_KEY }
+    assert_equal "The API key is for the sandbox environment, but environment is set to :production", error.message
+  end
+
+  def test_production_environment_after_sandbox_key_raises
+    config = Paddle::Configuration.new
+    config.api_key = SANDBOX_KEY
+
+    error = assert_raises(ArgumentError) { config.environment = :production }
+    assert_equal "The API key is for the sandbox environment, but environment is set to :production", error.message
+  end
+
+  def test_live_key_with_sandbox_environment_raises
+    config = Paddle::Configuration.new
+    config.environment = :sandbox
+
+    error = assert_raises(ArgumentError) { config.api_key = LIVE_KEY }
+    assert_equal "The API key is for the production environment, but environment is set to :sandbox", error.message
+    refute_includes error.message, LIVE_KEY
+  end
+
+  def test_resetting_environment_to_nil_uses_the_key
+    config = Paddle::Configuration.new
+    config.environment = :production
+    config.environment = nil
+    config.api_key = SANDBOX_KEY
+
+    assert_equal :sandbox, config.environment
+  end
+
+  def test_changing_key_when_environment_was_detected
+    config = Paddle::Configuration.new
+    config.api_key = SANDBOX_KEY
+    config.api_key = LIVE_KEY
+
+    assert_equal :production, config.environment
+  end
+
   private
 
   # Rebuild a clean sandbox connection so VCR-backed tests in other
