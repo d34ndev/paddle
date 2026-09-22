@@ -456,6 +456,11 @@ Paddle::Subscription.get_transaction(id: "sub_abc123")
 # https://developer.paddle.com/api-reference/subscriptions/create-one-time-charge
 Paddle::Subscription.charge(id: "sub_abc123", items: [ { price_id: "pri_123abc", quantity: 2 } ], effective_from: "immediately")
 
+# Preview a one-time charge for a subscription without billing it
+# Returns a Subscription with immediate_transaction and next_transaction previews
+# https://developer.paddle.com/api-reference/subscriptions/preview-subscription-charge
+Paddle::Subscription.charge_preview(id: "sub_abc123", items: [ { price_id: "pri_123abc", quantity: 2 } ], effective_from: "immediately")
+
 # Pause a subscription
 # https://developer.paddle.com/api-reference/subscriptions/pause-subscription
 Paddle::Subscription.pause(id: "sub_abc123")

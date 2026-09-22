@@ -33,6 +33,13 @@ module Paddle
         Subscription.new(response.body["data"])
       end
 
+      # Previews a one-time charge without billing it. Takes the same params as charge
+      def charge_preview(id:, items:, effective_from:, **params)
+        attrs = { items: items, effective_from: effective_from }
+        response = Client.post_request("subscriptions/#{id}/charge/preview", body: attrs.merge(params))
+        Subscription.new(response.body["data"])
+      end
+
       def pause(id:, **params)
         response = Client.post_request("subscriptions/#{id}/pause", body: params)
         Subscription.new(response.body["data"])

@@ -59,6 +59,25 @@ class SubscriptionTest < Minitest::Test
     assert_equal "PO-1234", subscription.billing_details.purchase_order_number
   end
 
+  def test_subscription_charge_preview
+    VCR.use_cassette("test_subscription_charge_preview_request", match_requests_on: [ :method, :uri, :body ]) do
+      subscription = Paddle::Subscription.charge_preview(id: "sub_01h7dvgvc6we84prca8gdhhr9c",
+        effective_from: "immediately",
+        items: [
+          {
+            price_id: "pri_01h7dy3z54j3q6ehcd0gvk35mb",
+            quantity: 1
+          }
+        ]
+      )
+
+      assert_equal Paddle::Subscription, subscription.class
+      assert_equal "sub_01h7dvgvc6we84prca8gdhhr9c", subscription.id
+      assert_equal "1000", subscription.immediate_transaction.details.totals.grand_total
+      assert_equal "pri_01h7dy3z54j3q6ehcd0gvk35mb", subscription.immediate_transaction.details.line_items.first.price_id
+    end
+  end
+
   def test_subscription_pause
     subscription = Paddle::Subscription.pause(id: "sub_01h7dvgvc6we84prca8gdhhr9c", effective_from: "immediately")
 

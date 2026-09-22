@@ -1,0 +1,23 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox-api.paddle.com/subscriptions/sub_01h7dvgvc6we84prca8gdhhr9c/charge/preview
+    body:
+      encoding: UTF-8
+      string: '{"items":[{"price_id":"pri_01h7dy3z54j3q6ehcd0gvk35mb","quantity":1}],"effective_from":"immediately"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"sub_01h7dvgvc6we84prca8gdhhr9c","status":"active","customer_id":"ctm_01h7dth5z8q7df4r73r4jek70g","address_id":"add_01h7dtpj3a5ygxw13fzhw8h445","business_id":null,"currency_code":"USD","collection_mode":"automatic","items":[],"immediate_transaction":{"billing_period":{"starts_at":"2026-09-22T10:00:00Z","ends_at":"2026-10-22T10:00:00Z"},"details":{"tax_rates_used":[],"totals":{"subtotal":"1000","discount":"0","tax":"0","total":"1000","credit":"0","balance":"1000","grand_total":"1000","fee":null,"earnings":null,"currency_code":"USD"},"line_items":[{"price_id":"pri_01h7dy3z54j3q6ehcd0gvk35mb","quantity":1,"tax_rate":"0","unit_totals":{"subtotal":"1000","discount":"0","tax":"0","total":"1000"},"totals":{"subtotal":"1000","discount":"0","tax":"0","total":"1000"}}]},"adjustments":[]},"next_transaction":null,"recurring_transaction_details":null,"update_summary":null,"import_meta":null},"meta":{"request_id":"4d5e6f7a-8b9c-4d0e-1f2a-3b4c5d6e7f8a"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0
