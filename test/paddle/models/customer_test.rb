@@ -48,6 +48,23 @@ class CustomerTest < Minitest::Test
     assert_equal "0", credit.balance.available
   end
 
+  def test_customer_credit_balances
+    balances = Paddle::Customer.credit_balances(id: "ctm_01hd12bdgxkfjx1cj8ynmjyark")
+
+    assert_equal Paddle::Collection, balances.class
+    assert_equal 2, balances.total
+    assert_equal Paddle::CreditBalance, balances.first.class
+    assert_equal [ "USD", "GBP" ], balances.map(&:currency_code)
+    assert_equal "1500", balances.last.balance.available
+  end
+
+  def test_customer_credit_balances_with_currency_code
+    balances = Paddle::Customer.credit_balances(id: "ctm_01hd12bdgxkfjx1cj8ynmjyark", currency_code: "GBP")
+
+    assert_equal 1, balances.total
+    assert_equal "GBP", balances.first.currency_code
+  end
+
   def test_object_update_without_ids
     VCR.use_cassette("test_customer_retrieve") do
       Paddle::Customer.retrieve(id: "ctm_01h7dth5z8q7df4r73r4jek70g").tap do |customer|

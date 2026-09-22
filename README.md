@@ -291,8 +291,12 @@ customer.update(status: "archived")
 # or
 Paddle::Customer.update(id: "ctm_abc123", status: "archived")
 
-# Retrieve credit balance for a customer
+# List credit balances for a customer. Customers have a balance for each currency
 # https://developer.paddle.com/api-reference/customers/list-credit-balances
+Paddle::Customer.credit_balances(id: "ctm_abc123")
+Paddle::Customer.credit_balances(id: "ctm_abc123", currency_code: "USD")
+
+# Retrieve the first credit balance for a customer
 Paddle::Customer.credit(id: "ctm_abc123")
 
 # Generate an authentication token for a customer

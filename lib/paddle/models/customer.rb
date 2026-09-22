@@ -22,9 +22,15 @@ module Paddle
         Customer.new(response.body["data"])
       end
 
+      def credit_balances(id:, **params)
+        response = Client.get_request("customers/#{id}/credit-balances", params: params)
+        Collection.from_response(response, type: CreditBalance)
+      end
+
+      # Returns only the first credit balance. Customers have a balance per currency,
+      # so use credit_balances to get all of them.
       def credit(id:)
-        response = Client.get_request("customers/#{id}/credit-balances")
-        CreditBalance.new(response.body["data"][0])
+        credit_balances(id: id).first
       end
 
       def auth_token(id:)

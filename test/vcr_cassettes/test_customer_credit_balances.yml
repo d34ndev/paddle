@@ -1,0 +1,21 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox-api.paddle.com/customers/ctm_01hd12bdgxkfjx1cj8ynmjyark/credit-balances
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"customer_id":"ctm_01hd12bdgxkfjx1cj8ynmjyark","currency_code":"USD","balance":{"available":"0","reserved":"0","used":"2499"}},{"customer_id":"ctm_01hd12bdgxkfjx1cj8ynmjyark","currency_code":"GBP","balance":{"available":"1500","reserved":"0","used":"0"}}],"meta":{"request_id":"8d2f6b1a-3c4e-4f5a-9b8c-7d6e5f4a3b2c"}}'
+  recorded_at: Tue, 22 Sep 2026 10:00:00 GMT
+recorded_with: VCR 6.2.0
