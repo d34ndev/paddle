@@ -4,7 +4,6 @@ PATH
     paddle (2.10)
       cgi
       faraday (>= 2.14.3, < 3)
-      ostruct (~> 0.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -45,7 +44,6 @@ GEM
     minitest (5.27.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    ostruct (0.6.3)
     parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)

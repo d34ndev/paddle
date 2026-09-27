@@ -27,6 +27,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = [ "lib" ]
 
   spec.add_dependency "faraday", ">= 2.14.3", "< 3"
-  spec.add_dependency "ostruct", "~> 0.6.0"
   spec.add_dependency "cgi"
 end
