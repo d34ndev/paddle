@@ -102,7 +102,7 @@ results = Paddle::Product.list(per_page: 10)
 #=> Paddle::Collection
 
 results.total
-#=> 10
+#=> 42
 
 results.per_page
 #=> 10
