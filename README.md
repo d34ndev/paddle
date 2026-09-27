@@ -194,6 +194,7 @@ All errors inherit from `Paddle::ErrorGenerator` and include:
 - `Paddle::Errors::ConflictError` (409) - Request conflicts with existing data
 - `Paddle::Errors::TooManyRequestsError` (429) - Rate limit exceeded
 - `Paddle::Errors::InternalError` (500) - Server error
+- `Paddle::Errors::NotImplementedError` (501) - Resource not implemented
 - `Paddle::Errors::ServiceUnavailableError` (503) - Service unavailable
 
 #### Error Example
@@ -887,6 +888,9 @@ Paddle::SimulationRun.retrieve(simulation_id: "ntfsim_abc123", id: "ntfsimrun_ab
 # List all simulation run events
 Paddle::SimulationRun.events(simulation_id: "ntfsim_abc123", id: "ntfsimrun_abc123")
 Paddle::SimulationRun.events(simulation_id: "ntfsim_abc123", id: "ntfsimrun_abc123", per_page: 10)
+
+# Retrieve a simulation run event
+Paddle::SimulationRunEvent.retrieve(simulation_id: "ntfsim_abc123", run_id: "ntfsimrun_abc123", id: "ntfsimevt_abc123")
 
 # Replay a simulation run event
 # https://developer.paddle.com/api-reference/simulations/replay-simulation-run-event
