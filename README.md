@@ -2,6 +2,8 @@
 
 The easiest and most complete Ruby library for the Paddle APIs, both Classic and Billing.
 
+Using Paddle Classic? See the [Classic API docs](docs/classic.md).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -33,8 +35,7 @@ Paddle.configure do |config|
 end
 ```
 
-API keys created since May 2025 start with `pdl_live_` or `pdl_sdbx_`, so the environment is detected from the key
-and you don't need to set it:
+API keys created since May 2025 start with `pdl_live_` or `pdl_sdbx_`, so the environment is detected from the key and you don't need to set it:
 
 ```ruby
 Paddle.configure do |config|
@@ -46,8 +47,7 @@ Paddle.config.environment
 ```
 
 If you do set an environment that doesn't match the key, such as `:production` with a `pdl_sdbx_` key,
-an `ArgumentError` is raised straight away, since those requests would always fail. Older API keys don't have a
-prefix, so set the environment for them as before. It defaults to `:production`.
+an `ArgumentError` is raised straight away, since those requests would always fail. Older API keys don't have a prefix, so set the environment for them as before. It defaults to `:production`.
 
 ### Using Multiple API Keys
 
@@ -65,12 +65,10 @@ Paddle.with_config(api_key: "pdl_live_apikey_...", version: 1) do
 end
 ```
 
-When a new API key is given without an environment, the environment is detected from the key. For older keys
-without a prefix, the current environment is kept.
+When a new API key is given without an environment, the environment is detected from the key. For older keys without a prefix, the current environment is kept.
 
 The config is stored per thread and fiber, so it's safe to use in multi-threaded servers like Puma and job
-runners like Sidekiq. Concurrent requests never see each other's keys. Threads and fibers started inside the
-block use the same config. `Paddle.configure` always changes the global config, even inside a block.
+runners like Sidekiq. Concurrent requests never see each other's keys. Threads and fibers started inside the block use the same config. `Paddle.configure` always changes the global config, even inside a block.
 
 ### Connection Options
 
@@ -91,8 +89,7 @@ end
 
 The gem maps as closely as we can to the Paddle API so you can easily convert API examples to gem code.
 
-Responses are created as objects like `Paddle::Product`. Having types like `Paddle::Product` is handy for understanding what
-type of object you're working with. They're built using OpenStruct so you can easily access data in a Ruby-ish way.
+Responses are created as objects like `Paddle::Product`. Having types like `Paddle::Product` is handy for understanding what type of object you're working with. They're built using OpenStruct so you can easily access data in a Ruby-ish way.
 
 ### Pagination
 
@@ -579,7 +576,22 @@ Paddle::Adjustment.create(
   items: [
     {
       type: "full",
-      item_id: "txnitm_anc123"
+      item_id: "txnitm_abc123"
+    }
+  ]
+)
+
+# Partially refund an item
+# amount is in the lowest denomination of the currency, e.g. "500" is $5.00 for USD
+Paddle::Adjustment.create(
+  action: "refund",
+  transaction_id: "txn_abc123",
+  reason: "Requested by customer",
+  items: [
+    {
+      type: "partial",
+      item_id: "txnitm_abc123",
+      amount: "500"
     }
   ]
 )
@@ -591,6 +603,10 @@ Paddle::Adjustment.create(
   reason: "Requested by customer",
   type: "full"
 )
+
+# Refunds are created with a status of "pending_approval" and are reviewed by Paddle
+# before being processed. Listen for the adjustment.updated webhook to know when
+# a refund has been approved or rejected.
 
 # Get a credit note for an adjustment
 # disposition defaults to "attachment"
@@ -895,61 +911,6 @@ Paddle::ClientToken.retrieve id: "ctkn_abc123"
 # Update a Client Token
 # https://developer.paddle.com/api-reference/client-tokens/update-client-token
 Paddle::ClientToken.update id: "ctkn_abc123", status: "revoked"
-```
-
-## Classic API
-
-For accessing the Paddle Classic API
-
-### Set Client Details
-
-Firstly you'll need to set your Vendor ID, Vendor Auth Code and if you want
-to use the Sandbox API or not.
-
-You can find your vendor details [here for production](https://vendors.paddle.com/authentication),
-or [here for sandbox](https://sandbox-vendors.paddle.com/authentication)
-
-```ruby
-@client = Paddle::Classic::Client.new(
-  vendor_id: "",
-  vendor_auth_code: "",
-  # Use the sandbox version of the API
-  sandbox: true
-)
-```
-
-### Plans
-
-```ruby
-# Retrieves a list of Plans
-@client.plans.list
-```
-
-### Subscription Users
-
-```ruby
-# List all users subscribed to any plan
-@client.users.list
-@client.users.list(subscription_id: "abc123")
-@client.users.list(plan_id: "abc123")
-@client.users.list(state: "active")
-@client.users.list(state: "deleted")
-
-# Update a user's subscription
-# https://developer.paddle.com/api-reference/e3872343dfbba-update-user
-@client.users.update(subscription_id: "abc123")
-
-# Pause a user's subscription
-@client.users.pause(subscription_id: "abc123")
-
-# Unpause a user's subscription
-@client.users.unpause(subscription_id: "abc123")
-
-# Update the Postcode/ZIP Code of a user's subscription
-@client.users.update_postcode(subscription_id: "abc123", postcode: "123abc")
-
-# Cancel a user's subscription
-@client.users.cancel(subscription_id: "abc123")
 ```
 
 ## Contributing
