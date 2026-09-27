@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = "paddle"
   spec.version       = Paddle::VERSION
   spec.authors       = [ "Dean Perry" ]
-  spec.email         = [ "dean@deanpcmad.com" ]
+  spec.email         = [ "dean@voupe.com" ]
 
   spec.summary       = "Ruby library for the Paddle Billing & Classic APIs"
   spec.homepage      = "https://github.com/d34ndev/paddle"
