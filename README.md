@@ -1,5 +1,10 @@
 # Paddle Ruby Library
 
+[![CI](https://github.com/d34ndev/paddle/actions/workflows/ci.yml/badge.svg)](https://github.com/d34ndev/paddle/actions/workflows/ci.yml)
+[![Gem Version](https://badge.fury.io/rb/paddle.svg)](https://badge.fury.io/rb/paddle)
+[![Downloads](https://img.shields.io/gem/dt/paddle.svg)](https://rubygems.org/gems/paddle)
+
+
 The easiest and most complete Ruby library for the Paddle APIs, both Classic and Billing.
 
 Using Paddle Classic? See the [Classic API docs](docs/classic.md).
