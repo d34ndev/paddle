@@ -9,7 +9,7 @@ Using Paddle Classic? See the [Classic API docs](docs/classic.md).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "paddle", "~> 2.10"
+gem "paddle", "~> 3.0"
 ```
 
 ## Billing API
