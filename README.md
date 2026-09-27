@@ -89,7 +89,21 @@ end
 
 The gem maps as closely as we can to the Paddle API so you can easily convert API examples to gem code.
 
-Responses are created as objects like `Paddle::Product`. Having types like `Paddle::Product` is handy for understanding what type of object you're working with. They're built using OpenStruct so you can easily access data in a Ruby-ish way.
+Responses are created as objects like `Paddle::Product`. Having types like `Paddle::Product` is handy for understanding what type of object you're working with. Attributes can be read with dot notation or like a hash, and nested data is wrapped too:
+
+```ruby
+transaction = Paddle::Transaction.retrieve(id: "txn_abc123")
+
+transaction.status                          #=> "completed"
+transaction[:status]                        #=> "completed"
+transaction.details.totals.total            #=> "1000"
+transaction.dig(:items, 0, :price, :id)     #=> "pri_abc123"
+transaction.missing_attribute               #=> nil
+
+# Convert back to a hash or JSON, including nested data
+transaction.to_h
+transaction.to_json
+```
 
 ### Pagination
 
