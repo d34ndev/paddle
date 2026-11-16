@@ -39,7 +39,9 @@ GEM
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
-    minitest (5.27.0)
+    minitest (6.1.0)
+      drb (~> 2.0)
+      prism (>= 1.5, < 3)
     net-http (0.9.1)
       uri (>= 0.11.1)
     parallel (2.1.0)
@@ -95,7 +97,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
-  minitest (~> 5.0)
+  minitest (~> 6.1)
   paddle!
   rake (~> 13.0)
   rubocop-rails-omakase
